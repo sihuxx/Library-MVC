@@ -31,28 +31,28 @@ $user = $_SESSION["ss"] ?? false;
         <?php } else if ($user->admin == 1) { ?>
             <nav class="nav1">
                 <ul>
-                    <li><a href="./bookAdmin.php">책 관리</a></li>
+                    <li><a href="/bookAdmin">책 관리</a></li>
                 </ul>
                 <ul>
-                    <li><a href="./rentalUserList.php">책 대여 유저 조회</a></li>
+                    <li><a href="/rentalAdmin">책 대여 유저 조회</a></li>
                 </ul>
                 </nav>
         <?php } else if ($user->super_admin == 1) { ?>
             <nav class="nav1">
                 <ul>
-                    <li><a href="./storeAdmin.php">서점 관리</a></li>
+                    <li><a href="/storeAdmin">서점 관리</a></li>
                 </ul>
                 <ul>
-                    <li><a href="./userAdmin.php">회원 관리</a></li>
+                    <li><a href="/userAdmin">회원 관리</a></li>
                 </ul>
             </nav>
         <?php } else { ?>
             <nav class="nav1">
                 <ul>
-                    <li><a href="./storeList.php">서점 조회</a></li>
+                    <li><a href="/storeList">서점 조회</a></li>
                 </ul>
                 <ul>
-                    <li><a href="./myProfile.php">마이 프로필</a></li>
+                    <li><a href="/profile">마이 프로필</a></li>
                 </ul>
             </nav>
         <?php } ?>
@@ -60,10 +60,10 @@ $user = $_SESSION["ss"] ?? false;
         <?php if (!$user) { ?>
             <nav>
                 <ul>
-                    <li><a href="./reg.php">회원가입</a></li>
+                    <li><a href="/reg">회원가입</a></li>
                 </ul>
                 <ul>
-                    <li><a href="./login.php">로그인</a></li>
+                    <li><a href="/login">로그인</a></li>
                 </ul>
             </nav>
         <?php } else if ($user->admin == 1) { ?>
@@ -73,7 +73,7 @@ $user = $_SESSION["ss"] ?? false;
                     <span class="user-type" style="background-color:#9cdc12">서점 관리자</span>
                 </ul>
                 <ul>
-                    <li><a href="./logout.php">로그아웃</a></li>
+                    <li><a href="/logout">로그아웃</a></li>
                 </ul>
             </nav>
         <?php } else if ($user->super_admin == 1) { ?>
@@ -83,7 +83,7 @@ $user = $_SESSION["ss"] ?? false;
                     <span class="user-type" style="background-color:#f3e248">슈퍼 관리자</span>
                 </ul>
                 <ul>
-                    <li><a href="./logout.php">로그아웃</a></li>
+                    <li><a href="/logout">로그아웃</a></li>
                 </ul>
             </nav>
         <?php } else { ?>
@@ -93,7 +93,7 @@ $user = $_SESSION["ss"] ?? false;
                     <span class="user-type">일반 유저</span>
                 </ul>
                 <ul>
-                    <li><a href="./logout.php">로그아웃</a></li>
+                    <li><a href="/logout">로그아웃</a></li>
                 </ul>
             </nav>
         <?php } ?>

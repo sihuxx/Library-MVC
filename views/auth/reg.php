@@ -1,5 +1,5 @@
 <main class="form-box">
-    <form action="./userAction.php" method="post">
+    <form action="/signUp" method="post">
       <h1 class="form-title">회원가입</h1>
       <input type="hidden" name="type" value="reg">
       <div>

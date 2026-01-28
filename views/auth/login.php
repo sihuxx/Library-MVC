@@ -1,5 +1,5 @@
 <main class="form-box">
-    <form action="./userAction.php" method="post">
+    <form action="/signIn" method="post">
       <h1 class="sign-title">로그인</h1>
       <input type="hidden" name="type" value="login">
       <div>
