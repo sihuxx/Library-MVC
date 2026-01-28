@@ -83,8 +83,8 @@ post("/signIn", function () {
     back("아이디가 일치하지 않습니다");
   }
 });
-post("/quit", function() {
-$idx = $_POST["idx"];
-db::exec("delete from user where idx = '$idx'");
-back("탈퇴 처리 되었습니다");
+post("/quit", function () {
+  $idx = $_POST["idx"];
+  db::exec("delete from user where idx = '$idx'");
+  back("탈퇴 처리 되었습니다");
 });

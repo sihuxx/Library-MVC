@@ -9,7 +9,10 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
       <h1><?= $store->title ?> 책 관리</h1>
       <p><?= $store->title ?>의 책을 조회, 등록, 수정, 삭제하세요.</p>
     </div>
-    <a href="./bookAdd.php?idx=<?= $store->idx ?>">+ <span>책 등록</span></a>
+    <form action="/bookAdd" method="post">
+      <input type="hidden" name="idx" value="<?= $store->idx ?>">
+      <button>+ <span>책 등록</span></button>
+    </form>
   </header>
   <div class="books">
     <?php foreach ($books as $book) { ?>
