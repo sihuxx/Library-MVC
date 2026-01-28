@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>책 대여 유저 조회 (캘린더)</title>
-  <link rel="stylesheet" href="./style/style.css">
-</head>
-
-<body>
-  <?php
-  require_once './header.php';
+<?php
   $year = isset($_GET['year']) ? $_GET["year"] : date('Y');
   $month = isset($_GET['month']) ? $_GET["month"] : date('m');
 

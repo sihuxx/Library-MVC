@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>책 대여 유저 조회 (표)</title>
-  <link rel="stylesheet" href="./style/style.css">
-</head>
-
-<body>
-  <?php
-  require_once './header.php';
+<?php
   $user = db::fetchAll("select u.*, ub.*, b.title, u.idx as user_id
     from user u inner join user_book ub
     on u.idx = ub.user_idx
@@ -47,7 +35,6 @@
       <span class="right white-btn btn">&gt;</span>
     </div>
   </main>
-</body>
 <script>
   const userData = <?= json_encode($user) ?>;
   const tableBody = document.querySelector("table tbody");
@@ -105,4 +92,3 @@
   renderUser();
 </script>
 
-</html>

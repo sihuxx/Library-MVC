@@ -1,12 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHP Library</title>
+  <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+
 <?php
-require_once './db.php';
+require_once '../db.php';
 $user = $_SESSION["ss"] ?? false;
 ?>
 
 <header class="header">
     <div class="header-content">
         <a href="./index.php" class="logo">
-            <img src="./images/logo.png" alt="">
+            <img src="/images/logo.png" alt="로고">
         </a>
 
                 <?php if (!$user) { ?>

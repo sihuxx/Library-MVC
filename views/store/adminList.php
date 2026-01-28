@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>서점 관리</title>
-  <link rel="stylesheet" href="./style/style.css">
-</head>
-<body>
-  <?php
-  require_once './header.php';
+<?php
   $stores = db::fetchAll("select * from stores");
   ?>
   <main class="view-box">
@@ -43,5 +33,3 @@
      <?php } ?>
     </div>
   </main>
-</body>
-</html>
