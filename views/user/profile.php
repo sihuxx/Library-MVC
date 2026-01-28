@@ -1,5 +1,5 @@
 <?php
-$idx = $_GET["idx"] ?? null;
+$idx = $_POST["idx"] ?? null;
 $user = null;
 
 if($idx) {
@@ -20,10 +20,10 @@ $returnBooks = db::fetchAll("select b.*, u.*, b.idx as book_id from book b inner
       <p>가입 한 이메일: <?= $user->email ?></p>
     </div>
    <?php if(!$idx) { ?>
-     <div class="btns">
-      <a href="./userDeleteAction.php?idx=<?= $user->idx ?>" onclick="return confirm('정말 탈퇴하시겠습니까?')"
-        class="btn red-btn">회원 탈퇴</a>
-    </div>
+      <form class="btns" action="/quit" method="post">
+        <input type="hidden" name="name" value="<?= $user->idx ?>">
+        <button onclick="return confirm('정말 탈퇴하시겠습니까?')" class="btn red-btn">회원 탈퇴</button>
+      </form>
    <?php } ?>
   </header>
   <div class="profile" style="padding-bottom:100px;">
@@ -48,7 +48,7 @@ $returnBooks = db::fetchAll("select b.*, u.*, b.idx as book_id from book b inner
             <p class="book-period">반납 기한: <?= $book->period ?>일 남음</p>
             <p class="book-store">서점: <?= $store->title ?></p>
           </div>
-          <form method="post" action="./bookReturn.php" class="book-btns">
+          <form method="post" action="/return" class="book-btns">
             <input type="hidden" name="book_idx" value="<?= $book->book_id ?>">
             <button class="btn">반납</button>
           </form>

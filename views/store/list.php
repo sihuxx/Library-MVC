@@ -22,7 +22,10 @@ $stores = db::fetchAll("select * from stores");
           </div>
         </div>
         <div class="store-btns">
-          <a href="./store.php?idx=<?= $store->idx ?>" class="btn">구경하기</a>
+          <form action="/store" method="post">
+            <input type="hidden" name="idx" value="<?= $store->idx ?>">
+            <button class="btn">구경하기</button>
+          </form>
           <p><?= count($books) ?>권의 책</p>
         </div>
       </div>

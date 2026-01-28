@@ -7,12 +7,12 @@ if ($idx) {
 }
 
 $isEdit = !empty($book);
-$url = $isEdit ? "/book/edit" : "/book/add";
+$url = $isEdit ? "/bookEdit" : "/bookAdd";
 $text = $isEdit ? "책 수정" : "책 등록";
 $required = $isEdit ? "required" : '';
 ?>
 <main class="form-box">
-  <form action="./bookEditAction.php" method="post" enctype="multipart/form-data">
+  <form action="<?=$url?>" method="post" enctype="multipart/form-data">
     <h1 class="form-title"><?= $text ?></h1>
     <input type="hidden" name="idx" value="<?= $idx ?>">
     <div>

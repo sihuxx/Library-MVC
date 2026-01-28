@@ -1,5 +1,5 @@
 <?php
-$idx = $_GET["idx"];
+$idx = $_POST["idx"];
 $store = db::fetch("select * from stores where idx = '$idx'");
 $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
 ?>
@@ -36,7 +36,7 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
             <p class="book-stock">재고: <?= $book->count ?>/<?= $book->stock ?></p>
           </div>
           <?php if ($book->count > 0) { ?>
-            <form method="post" action="bookRental.php" class="book-btns">
+            <form method="post" action="/rental" class="book-btns">
               <input type="hidden" name="book_idx" value="<?= $book->idx ?>">
               <input type="hidden" name="store_idx" value="<?= $store->idx ?>">
               <button class="btn">대여</button>
