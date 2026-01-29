@@ -31,6 +31,9 @@ get('/storeList', function () {
 post('/profile', function () {
   views("user/profile");
 });
+get('/myProfile', function () {
+  views("user/profile");
+});
 post("/store", function () {
   views("store/store");
 });
@@ -63,14 +66,14 @@ post("/rental", function () {
     move("/storeList", "이미 대여 중인 책입니다");
   } else {
     db::exec("insert into user_book(user_idx, book_idx, store_idx, period, is_rental) values ('$user->idx', '$book_idx', '$store_idx', '7', '1')");
-    move("/profile", "책 대여가 완료되었습니다");
+    move("/myProfile", "책 대여가 완료되었습니다");
   }
 });
 post("/return", function () {
   $book_idx = $_POST["book_idx"];
   $user = $_SESSION["ss"];
   db::exec("update user_book set is_rental = '0' where user_idx = '$user->idx' and book_idx = '$book_idx'");
-  move("/profile", "책 반납이 완료되었습니다");
+  move("/myProfile", "책 반납이 완료되었습니다");
 });
 post("/signUp", function () {
   extract($_POST);
@@ -100,7 +103,7 @@ post("/signIn", function () {
 post("/quit", function () {
   $idx = $_POST["idx"];
   db::exec("delete from user where idx = '$idx'");
-  back("탈퇴 처리 되었습니다");
+  move('/', "탈퇴 처리 되었습니다");
 });
 post("/bookDel", function () {
   $idx = $_GET["idx"];
@@ -130,6 +133,7 @@ post("/bookUpdate", function () {
     move("/bookAdmin", "책 정보가 수정되었습니다");
   }
 });
+
 post("/userDelete", function () {
   $idx = $_POST["idx"];
   db::exec("delete from user where idx = '$idx'");

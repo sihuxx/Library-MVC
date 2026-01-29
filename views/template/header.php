@@ -52,7 +52,7 @@ $user = $_SESSION["ss"] ?? false;
                     <li><a href="/storeList">서점 조회</a></li>
                 </ul>
                 <ul>
-                    <li><a href="/profile">마이 프로필</a></li>
+                    <li><a href="/myProfile">마이 프로필</a></li>
                 </ul>
             </nav>
         <?php } ?>
