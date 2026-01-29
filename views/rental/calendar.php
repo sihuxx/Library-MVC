@@ -1,4 +1,5 @@
 <?php
+  $store_idx = $_POST["idx"];
   $year = isset($_GET['year']) ? $_GET["year"] : date('Y');
   $month = isset($_GET['month']) ? $_GET["month"] : date('m');
 
@@ -7,10 +8,10 @@
   $start_week = date("w", $time);
   $total_day = date("t", $time);
   $total_week = ceil(($total_day + $start_week) / 7);
-  $users = db::fetchAll("select u.*, ub.*, u.idx as user_id 
-  from user u inner join user_book ub 
-  on u.idx = ub.user_idx 
-  where ub.rental_date like '$year-$month-%' 
+  $users = db::fetchAll("select u.*, ub.*, s.idx, u.idx as user_id 
+  from user u inner join user_book ub on u.idx = ub.user_idx
+  inner join stores s on s.idx = ub.store_idx
+  where ub.rental_date like '$year-$month-%' and s.idx = $store_idx 
   group by u.idx, ub.rental_date");
   ?>
   <div class="background">

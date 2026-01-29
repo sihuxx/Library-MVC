@@ -1,8 +1,10 @@
 <?php
-  $user = db::fetchAll("select u.*, ub.*, b.title, u.idx as user_id
-    from user u inner join user_book ub
-    on u.idx = ub.user_idx
-    inner join book b on ub.book_idx = b.idx");
+  $store_idx = $_POST["idx"];
+  $user = db::fetchAll("select u.*, ub.*, b.title, s.idx as store_id, u.idx as user_id
+  from user u inner join user_book ub on u.idx = ub.user_idx
+  inner join book b on b.idx = ub.book_idx
+  inner join stores s on s.idx = ub.store_idx
+  where s.idx = $store_idx");
   ?>
   <main class="view-box">
     <header>

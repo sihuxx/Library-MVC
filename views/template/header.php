@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PHP Library</title>
   <link rel="stylesheet" href="/style/style.css">
+  <link rel="stylesheet" href="/fontawesome/css/font-awesome.css">
 </head>
 <body>
 

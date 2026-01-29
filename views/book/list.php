@@ -10,8 +10,8 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
       <p><?= $store->title ?>의 책을 조회, 등록, 수정, 삭제하세요.</p>
     </div>
     <form action="/bookAdd" method="post">
-      <input type="hidden" name="idx" value="<?= $store->idx ?>">
-      <button>+ <span>책 등록</span></button>
+      <input type="hidden" name="store_idx" value="<?= $store->idx ?>">
+      <button class="btn">+ <span>책 등록</span></button>
     </form>
   </header>
   <div class="books">
@@ -25,12 +25,12 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
           <p class="book-des"><?= $book->des ?></p>
           <p class="book-stock">재고: <?= $book->count ?>/<?= $book->stock ?></p>
         </div>
-        <div class="book-btns">
-          <a href="./bookEdit.php?idx=<?= $book->idx ?>" class="btn">수정</a>
-          <a href="./bookDeleteAction.php?idx=<?= $book->idx ?>" onclick="return confirm('정말 삭제하시겠습니까?')"
-            class="btn red-btn">삭제</a>
-        </div>
+        <form class="book-btns" method="post">
+          <input type="hidden" name="idx" value="<?= $book->idx ?>">
+          <button formaction="/bookEdit" class="btn">수정</button>
+          <button onclick="return confirm('정말 삭제하시겠습니까?')" class="red-btn btn" formaction="/bookDelete">삭제</button>
+        </form>
       </div>
-    <?php } ?>
+      <?php } ?>
   </div>
 </main>

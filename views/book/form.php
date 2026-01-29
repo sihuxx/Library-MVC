@@ -1,5 +1,6 @@
 <?php
-$idx = $_GET["idx"] ?? null;
+$idx = $_POST["idx"] ?? null;
+$store_idx = $_POST["store_idx"] ?? null;
 $book = null;
 
 if ($idx) {
@@ -7,14 +8,18 @@ if ($idx) {
 }
 
 $isEdit = !empty($book);
-$url = $isEdit ? "/bookEdit" : "/bookAdd";
+$url = $isEdit ? "/bookUpdate" : "/bookInsert";
 $text = $isEdit ? "책 수정" : "책 등록";
-$required = $isEdit ? "required" : '';
+$required = $isEdit ? "" : 'required';
 ?>
 <main class="form-box">
   <form action="<?=$url?>" method="post" enctype="multipart/form-data">
     <h1 class="form-title"><?= $text ?></h1>
-    <input type="hidden" name="idx" value="<?= $idx ?>">
+    <?php if($isEdit) { ?>
+      <input type="hidden" name="idx" value="<?= $idx ?>">
+    <?php } else { ?>
+      <input type="hidden" name="store_idx" value="<?= $store_idx ?>">
+    <?php } ?>
     <div>
       <?php if ($isEdit) { ?>
         <img src="<?= $book->img ?? '' ?>" alt="<?= $book->title ?? '' ?>">

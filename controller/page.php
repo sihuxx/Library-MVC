@@ -14,40 +14,52 @@ get('/logout', function () {
   move("/");
 });
 get('/bookAdmin', function () {
-  views("/book/list");
+  views("book/list");
 });
 get('/rentalAdmin', function () {
-  views("/rental/list");
+  views("rental/list");
 });
 get('/storeAdmin', function () {
-  views("/store/adminList");
+  views("store/adminList");
 });
 get('/userAdmin', function () {
-  views("/user/list");
+  views("user/list");
 });
 get('/storeList', function () {
-  views("/store/list");
+  views("store/list");
 });
 get('/profile', function () {
-  views("/user/profile");
+  views("user/profile");
 });
 post("/store", function () {
   views("store/store");
+});
+post("/bookAdd", function () {
+  views("/book/form");
+});
+post("/bookEdit", function () {
+  views("/book/form");
+});
+post("/calendar", function () {
+  views("/rental/calendar");
+});
+post("/table", function () {
+  views("/rental/table");
 });
 post("/rental", function () {
   $user = $_SESSION['ss'];
   $book_idx = $_POST["book_idx"];
   $book = db::fetch("select * from book where idx = '$book_idx'");
   $store_idx = $_POST["store_idx"];
-  if ($book->count < 1) {
+  $userBook = db::fetchAll("select * from user_book where book_idx = $book->idx and is_rental = '1'");
+  if ($book->stock - count($userBook) < 1) {
     alert("재고가 없는 책입니다.");
     return;
   }
   if (db::fetch("select * from user_book where user_idx = '$user->idx' and book_idx = '$book_idx' and is_rental = '1'")) {
     move("/storeList", "이미 대여 중인 책입니다");
   } else {
-    db::exec("insert into user_book(user_idx, book_idx, period, is_rental) values ('$user->idx', '$book_idx', '7', '1')");
-    db::exec("update book set count = count - 1 where idx = '$book_idx'");
+    db::exec("insert into user_book(user_idx, book_idx, store_idx, period, is_rental) values ('$user->idx', '$book_idx', '$store_idx', '7', '1')");
     move("/profile", "책 대여가 완료되었습니다");
   }
 });
@@ -55,7 +67,6 @@ post("/return", function () {
   $book_idx = $_POST["book_idx"];
   $user = $_SESSION["ss"];
   db::exec("update user_book set is_rental = '0' where user_idx = '$user->idx' and book_idx = '$book_idx'");
-  db::exec("update book set count = count + 1 where idx = '$book_idx'");
   move("/profile", "책 반납이 완료되었습니다");
 });
 post("/signUp", function () {
@@ -87,4 +98,32 @@ post("/quit", function () {
   $idx = $_POST["idx"];
   db::exec("delete from user where idx = '$idx'");
   back("탈퇴 처리 되었습니다");
+});
+post("/bookDel", function () {
+  $idx = $_GET["idx"];
+  db::exec("delete from book where idx = '$idx'");
+  move("/bookAdmin", "책이 삭제되었습니다");
+});
+post("/bookInsert", function () {
+  extract($_POST);
+  $file = $_FILES["file"];
+  $path = './images/books/' . $file["name"];
+  if (move_uploaded_file($file["tmp_name"], $path)) {
+    db::exec("insert into book(title, des, img, stock, store_idx) values('$title', '$des', '$path', '$stock', '$store_idx')");
+    move("/bookAdmin", "책이 등록되었습니다");
+  } else {
+    back("파일 업로드에 실패했습니다");
+  }
+});
+post("/bookUpdate", function () {
+  extract($_POST);
+  $file = $_FILES["file"];
+  $path = './images/books/' . $file['name'];
+  if (move_uploaded_file($file['tmp_name'], $path)) {
+    db::exec("update book set title = '$title', des = '$des', img ='$path', stock = '$stock' where idx = '$idx'");
+    move("/bookAdmin", "책 정보가 수정되었습니다");
+  } else {
+    db::exec("update book set title = '$title', des = '$des', stock = '$stock' where idx = '$idx'");
+    move("/bookAdmin", "책 정보가 수정되었습니다");
+  }
 });
