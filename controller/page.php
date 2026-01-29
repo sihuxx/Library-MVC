@@ -28,23 +28,26 @@ get('/userAdmin', function () {
 get('/storeList', function () {
   views("store/list");
 });
-get('/profile', function () {
+post('/profile', function () {
   views("user/profile");
 });
 post("/store", function () {
   views("store/store");
 });
-post("/bookAdd", function () {
-  views("/book/form");
-});
-post("/bookEdit", function () {
-  views("/book/form");
+post("/bookForm", function () {
+  views("book/form");
 });
 post("/calendar", function () {
-  views("/rental/calendar");
+  views("rental/calendar");
 });
 post("/table", function () {
-  views("/rental/table");
+  views("rental/table");
+});
+get("/storeAdd", function () {
+  views("store/form");
+});
+post("/storeEdit", function () {
+  views("store/form");
 });
 post("/rental", function () {
   $user = $_SESSION['ss'];
@@ -125,5 +128,59 @@ post("/bookUpdate", function () {
   } else {
     db::exec("update book set title = '$title', des = '$des', stock = '$stock' where idx = '$idx'");
     move("/bookAdmin", "책 정보가 수정되었습니다");
+  }
+});
+post("/userDelete", function () {
+  $idx = $_POST["idx"];
+  db::exec("delete from user where idx = '$idx'");
+  back("탈퇴 처리 되었습니다");
+});
+post("/userDeleteAdmin", function () {
+  $user_idx = $_POST["idx"];
+  $store = db::fetch("select * from stores where admin_idx = '$user_idx'");
+  db::exec("update stores set admin_idx = null where idx = '$store->idx'");
+  db::exec("update user set admin = '0' where idx = '$user_idx'");
+  move("/userAdmin", "서점 관리자가 삭제되었습니다");
+});
+post("/userAddAdmin", function () {
+  views("user/addAdmin");
+});
+post("/userInsertAdmin", function () {
+  extract($_POST);
+  if (db::fetch("select * from stores where idx = '$store_idx' and admin_idx is null")) {
+    db::exec("update stores set admin_idx = '$user_idx' where idx = '$store_idx'");
+    db::exec("update user set admin = '1' where idx = '$user_idx'");
+    move("/userAdmin", "서점 관리자가 추가되었습니다");
+  } else {
+    move("/userAdmin", "이미 서점 관리자가 존재하는 서점입니다");
+  }
+});
+post("/storeDel", function () {
+  $idx = $_POST["idx"];
+  db::exec("delete from stores where idx = '$idx'");
+  alert(("서점이 삭제되었습니다"));
+  move("/storeAdmin");
+});
+post("/storeUpdate", function () {
+  extract($_POST);
+  $file = $_FILES['file'];
+  $path = './images/stores/' . $file["name"];
+  if (move_uploaded_file($file["tmp_name"], $path)) {
+    db::exec("update stores set title = '$title', des = '$des', img = '$path' where idx = '$idx'");
+    move('/storeAdmin', "서점 정보가 수정되었습니다");
+  } else {
+    db::exec("update stores set title = '$title', des = '$des' where idx = '$idx'");
+    move('/storeAdmin', "서점 정보가 수정되었습니다");
+  }
+});
+post("/storeInsert", function () {
+  extract(($_POST));
+  $file = $_FILES['file'];
+  $path = './images/stores/' . $file['name'];
+  if (move_uploaded_file($file["tmp_name"], $path)) {
+    db::exec("insert into stores(title, des, img) values('$title', '$des', '$path')");
+    move('/storeAdmin', "서점이 등록되었습니다");
+  } else {
+    back("파일 업로드에 실패했습니다");
   }
 });

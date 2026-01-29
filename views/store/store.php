@@ -18,9 +18,10 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
   </div>
   <div class="books">
     <?php if (count($books) > 0) { ?>
-      <?php foreach ($books as $book) { ?>
+      <?php foreach ($books as $book) {
+        $userBook = db::fetchAll("select * from user_book where book_idx = $book->idx and is_rental = '1'"); ?>
         <div class="book">
-          <?php if ($book->count > 0) { ?>
+          <?php if ($book->stock - count($userBook) > 0) { ?>
             <div class="book-img">
               <img src="<?= $book->img ?>" alt="<?= $book->title ?>">
             </div>
@@ -33,9 +34,9 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
           <div class="book-content">
             <h3 class="book-title"><?= $book->title ?></h3>
             <p class="book-des"><?= $book->des ?></p>
-            <p class="book-stock">재고: <?= $book->count ?>/<?= $book->stock ?></p>
+            <p class="book-stock">재고: <?= $book->stock - count($userBook) ?>/<?= $book->stock ?></p>
           </div>
-          <?php if ($book->count > 0) { ?>
+          <?php if ($book->stock - count($userBook) > 0) { ?>
             <form method="post" action="/rental" class="book-btns">
               <input type="hidden" name="book_idx" value="<?= $book->idx ?>">
               <input type="hidden" name="store_idx" value="<?= $store->idx ?>">

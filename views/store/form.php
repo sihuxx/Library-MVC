@@ -1,5 +1,5 @@
 <?php
-$idx = $_GET["idx"] ?? null;
+$idx = $_POST["idx"] ?? null;
 $store = null;
 
 if($idx) {
@@ -7,13 +7,13 @@ if($idx) {
 }
 
 $isEdit = !empty($store);
-$url = $isEdit ? "/store/edit" : "/store/add";
+$url = $isEdit ? "/storeUpdate" : "/storeInsert";
 $text = $isEdit ? "서점 수정" : "서점 등록";
-$required = $isEdit ? "required" : '';
+$required = $isEdit ? "" : 'required';
 ?>
 
 <main class="form-box">
-  <form action="<?=$url ?>" method="post" enctype="multipart/form-data">
+  <form action="<?= $url ?>" method="post" enctype="multipart/form-data">
     <h1 class="form-title"><?=$text ?></h1>
     <input type="hidden" name="idx" value="<?= $store->idx ?? '' ?>">
     <div>

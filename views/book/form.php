@@ -42,6 +42,3 @@ $required = $isEdit ? "" : 'required';
     <button type="submit"><?= $text ?></button>
   </form>
 </main>
-</body>
-
-</html>

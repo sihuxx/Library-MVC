@@ -127,7 +127,9 @@
               <span>${user.name}</span>
               <span>@${user.id}</span>
             </div>
-            <a href="./profile.php?idx=${user.user_id}" class="btn">프로필 보기</a>
+           <form method="post" action="/profile">
+            <button class="btn white-btn">프로필 보기</button>
+           </form>
            </div>
           `;
           });

@@ -10,13 +10,12 @@
 <body>
 
 <?php
-require_once '../db.php';
 $user = $_SESSION["ss"] ?? false;
 ?>
 
 <header class="header">
     <div class="header-content">
-        <a href="./index.php" class="logo">
+        <a href="/" class="logo">
             <img src="/images/logo.png" alt="로고">
         </a>
 

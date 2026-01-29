@@ -75,6 +75,3 @@ $returnBooks = db::fetchAll("select b.*, u.*, b.idx as book_id from book b inner
     </div>
   </div>
 </main>
-</body>
-
-</html>

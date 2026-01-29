@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원 관리</title>
-  <link rel="stylesheet" href="./style/style.css">
-</head>
-<body>
-  <?php
-    require_once './header.php';
+ <?php
     $users = db::fetchAll("select * from user where super_admin = 0");
   ?>
   <main class="view-box">
@@ -43,18 +33,22 @@
             <td><?=$user->name?></td>
             <td><?=$user->email?></td>
             <td><?=$user->date?></td>
-            <td class="btns" style="display:block;">
-              <a href="./userDeleteAction.php?idx=<?=$user->idx?>" onclick="return confirm('정말 삭제하시겠습니까?')" class="red-btn btn">탈퇴</a>
-              <?php if($user->admin == 1){ ?>
-              <a href="./userDeleteAdminAction.php?idx=<?=$user->idx?>" class="white-btn btn">관리자 해제</a>
-              <?php } else { ?>
-              <a href="./userAddAdmin.php?idx=<?=$user->idx?>" class="white-btn btn">관리자 등록</a>
+            <td class="btns">
+              <form action="/userDelete" method="post">
+                <input type="hidden" name="idx" value="<?=$user->idx?>">
+                <button onclick="return confirm('정말 삭제하시겠습니까?')" class="red-btn btn">탈퇴</button>
+              </form>
+              <form method="post">
+                <input type="hidden" name="idx" value="<?=$user->idx?>">
+                  <?php if($user->admin == 1) { ?>
+                    <button formaction="/userDeleteAdmin" class="white-btn btn">관리자 해제</button>
+                  <?php } else { ?>
+                  <button formaction="/userAddAdmin" class="white-btn btn">관리자 등록</button>
+                <?php  } ?>
+              </form>
               <?php } ?>
             </td>
           </tr>
-        <?php } ?>
       </tbody>
     </table>
   </main>
-</body>
-</html>

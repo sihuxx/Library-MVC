@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상점 선택</title>
-  <link rel="stylesheet" href="./style/style.css">
-</head>
-
-<body>
-  <?php
-  require_once './header.php';
-  require_once './lib.php';
-  $idx = $_GET['idx'];
+<?php
+  $idx = $_POST['idx'];
   if(db::fetch("select * from stores where admin_idx = '$idx'")) {
-    alert("이미 서점 관리자로 등록된 유저입니다");
-    move("./userAdmin.php");
+    move("/userAdmin", "이미 서점 관리자로 등록된 유저입니다");
   }
   $stores = db::fetchAll("select * from stores");
   ?>
@@ -31,7 +17,7 @@
             <p class="store-date"><?= $store->create_at ?></p>
           </div>
         </div>
-        <form class="store-btns" method="post" action="./userAddAdminAction.php">
+        <form class="store-btns" method="post" action="/userInsertAdmin">
           <input type="hidden" name="user_idx" value="<?=$idx?>">
           <input type="hidden" name="store_idx" value="<?=$store->idx?>">
           <button class="btn">선택</button>
@@ -40,6 +26,3 @@
     <?php } ?>
   </div>
 </main>
-</body>
-
-</html>
