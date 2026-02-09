@@ -28,8 +28,8 @@ get('/userAdmin', function () {
 get('/storeList', function () {
   views("store/list");
 });
-post('/profile', function () {
-  views("user/profile");
+get('/profile/{idx}', function ($idx) {
+  views("user/profile", ["idx"=>$idx]);
 });
 get('/myProfile', function () {
   views("user/profile");
@@ -40,11 +40,15 @@ post("/store", function () {
 post("/bookForm", function () {
   views("book/form");
 });
-post("/calendar", function () {
-  views("rental/calendar");
+get("/calendar/{idx}", function ($idx) {
+  views("rental/calendar", [
+    "store_idx"=>$idx,
+    "year"=>$_GET["year"] ?? date("Y"),
+    "month"=>$_GET["month"] ?? date("m"),
+    ]);
 });
-post("/table", function () {
-  views("rental/table");
+get("/table/{idx}", function ($idx) {
+  views("rental/table", ["store_idx"=>$idx]);
 });
 get("/storeAdd", function () {
   views("store/form");
@@ -54,9 +58,8 @@ post("/storeEdit", function () {
 });
 post("/rental", function () {
   $user = $_SESSION['ss'];
-  $book_idx = $_POST["book_idx"];
+  extract($_POST);
   $book = db::fetch("select * from book where idx = '$book_idx'");
-  $store_idx = $_POST["store_idx"];
   $userBook = db::fetchAll("select * from user_book where book_idx = $book->idx and is_rental = '1'");
   if ($book->stock - count($userBook) < 1) {
     alert("재고가 없는 책입니다.");

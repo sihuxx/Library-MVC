@@ -1,8 +1,4 @@
 <?php
-  $store_idx = $_POST["idx"];
-  $year = isset($_GET['year']) ? $_GET["year"] : date('Y');
-  $month = isset($_GET['month']) ? $_GET["month"] : date('m');
-
   $date = "$year-$month-01";
   $time = strtotime($date);
   $start_week = date("w", $time);
@@ -30,16 +26,16 @@
     </header>
     <div class="table-control" style="margin: 30px 0">
       <?php if ($month == 1) { ?>
-        <a class="btn white-btn" href="?year=<?= $year - 1 ?>&month=12">&lt;</a>
+        <a class="btn white-btn" href="/calendar/<?=$store_idx?>?year=<?= $year - 1 ?>&month=12">&lt;</a>
       <?php } else { ?>
-        <a class="btn white-btn" href="?year=<?= $year ?>&month=<?= $month - 1 ?>">&lt;</a>
+        <a class="btn white-btn" href="/calendar/<?=$store_idx?>?year=<?= $year ?>&month=<?= $month - 1 ?>">&lt;</a>
       <?php } ?>
 
       <?php echo "$year 년 $month 월" ?>
       <?php if ($month == 12) { ?>
-        <a class="btn white-btn" href="?year=<?= $year + 1 ?>&month=1">&lt;</a>
+        <a class="btn white-btn" href="/calendar/<?=$store_idx?>?year=<?= $year + 1 ?>&month=1">&gt;</a>
       <?php } else { ?>
-        <a class="btn white-btn" href="?year=<?= $year ?>&month=<?= $month + 1 ?>">&gt;</a>
+        <a class="btn white-btn" href="/calendar/<?=$store_idx?>?year=<?= $year ?>&month=<?= $month + 1 ?>">&gt;</a>
       <?php } ?>
     </div>
     <table class="calender-table">
@@ -127,9 +123,7 @@
               <span>${user.name}</span>
               <span>@${user.id}</span>
             </div>
-           <form method="post" action="/profile">
-            <button class="btn white-btn">프로필 보기</button>
-           </form>
+           <a href="/profile/${user.user_id}" class="white-btn">프로필 보기</a>
            </div>
           `;
           });

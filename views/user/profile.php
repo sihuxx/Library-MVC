@@ -1,9 +1,8 @@
 <?php
-$idx = $_POST["idx"] ?? null;
 $user = null;
 
 if($idx) {
-  $user = db::fetch("select * from user where idx = '$idx'");
+  $user = db::fetch("select * from `user` where idx = '$idx'");
 } else {
   $user = $_SESSION["ss"];
 }

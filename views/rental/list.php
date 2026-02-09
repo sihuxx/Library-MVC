@@ -16,11 +16,8 @@ $store = db::fetch("select * from stores where admin_idx = $user->idx");
         <i class="fa fa-calendar-o fa-2x"></i>
         <h3>캘린더</h3>
         <p>날짜 별 책 대여 유저를 <br> 조회하세요.</p>
+        <a href="/calendar/<?=$store->idx?>" class="btn">조회하기</a>
       </div>
-      <form action="/calendar" method="post">
-        <input type="hidden" name="idx" value="<?=$store->idx?>">
-        <button class="btn">조회하기</button>
-      </form>
     </div>
     <div>
       <div>
@@ -28,10 +25,7 @@ $store = db::fetch("select * from stores where admin_idx = $user->idx");
         <h3>표</h3>
         <p>표 형식으로 책 대여 유저를 <br> 조회하세요.</p>
       </div>
-      <form action="/table" method="post">
-        <input type="hidden" name="idx" value="<?=$store->idx?>">
-        <button class="btn">조회하기</button>
-      </form>
+      <a href="/table/<?=$store->idx?>" class="btn">조회하기</a>
     </div>
   </div>
 </main>

@@ -8,8 +8,9 @@ function move($uri, $msg = false)
   echo "<script>location.href = '$uri'</script>";
 }
 
-function views($page)
+function views($page, $data=[])
 {
+  extract($data);
   require_once '../views/template/header.php';
   require_once "../views/$page.php";
   require_once '../views/template/footer.php';
