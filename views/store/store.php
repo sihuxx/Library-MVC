@@ -37,11 +37,14 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
             <p class="book-stock">재고: <?= $book->stock - count($userBook) ?>/<?= $book->stock ?></p>
           </div>
           <?php if ($book->stock - count($userBook) > 0) { ?>
-            <form method="post" action="/rental" class="book-btns">
-              <input type="hidden" name="book_idx" value="<?= $book->idx ?>">
-              <input type="hidden" name="store_idx" value="<?= $store->idx ?>">
-              <button class="btn">대여</button>
-            </form>
+            <div class="book-btns">
+              <form method="post" action="/rental" class="book-btns">
+                <input type="hidden" name="book_idx" value="<?= $book->idx ?>">
+                <input type="hidden" name="store_idx" value="<?= $store->idx ?>">
+                <button class="btn">대여</button>
+              </form>
+              <button class="btn red-btn wish-btn" data-store-id="<?=$store->idx?>" data-book-id="<?=$book->idx?>">관심</button>
+            </div>
           <?php } else { ?>
             <div class="book-btns">
               <button class="btn white-btn" onclick="alert('재고가 없는 책입니다.')">대여</button>
@@ -54,3 +57,28 @@ $books = db::fetchAll("select * from book where store_idx = '$store->idx'");
     <?php } ?>
   </div>
 </main>
+
+<script>
+  const wishBtns = document.querySelectorAll(".wish-btn");
+  wishBtns.forEach(btn => {
+    btn.onclick = async (e) => {
+      const bookIdData = e.currentTarget.dataset.bookId;
+      const storeIdData = e.currentTarget.dataset.storeId;
+      /* dataset 변환 규칙 (카멜케이스) 
+        data-id	-> dataset.id
+        data-book-id ->	dataset.bookId
+      */
+      const response = await fetch("/wish", {
+        method: "POST",
+        body: JSON.stringify({ bookId: bookIdData, storeId: storeIdData }),
+        headers: { 'Content-Type': 'application/json' },
+      }).then(res => res.json());
+
+      if (response.success) {
+        alert(response.msg);
+      } else  {
+        alert(response.msg);
+      }
+    } 
+  })
+</script>

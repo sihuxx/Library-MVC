@@ -29,7 +29,7 @@ get('/storeList', function () {
   views("store/list");
 });
 get('/profile/{idx}', function ($idx) {
-  views("user/profile", ["idx"=>$idx]);
+  views("user/profile", ["idx" => $idx]);
 });
 get('/myProfile', function () {
   views("user/profile");
@@ -165,7 +165,7 @@ post("/userInsertAdmin", function () {
 post("/storeDel", function () {
   $idx = $_POST["idx"];
   db::exec("delete from stores where idx = '$idx'");
-  alert(("서점이 삭제되었습니다"));
+  alert("서점이 삭제되었습니다");
   move("/storeAdmin");
 });
 post("/storeUpdate", function () {
@@ -189,5 +189,25 @@ post("/storeInsert", function () {
     move('/storeAdmin', "서점이 등록되었습니다");
   } else {
     back("파일 업로드에 실패했습니다");
+  }
+});
+post("/wish", function() {
+  header("Content-Type: application/json");
+  $json = file_get_contents("php://input");
+  $data = json_decode($json, true);
+  $bookId = $data['bookId'];
+  $storeId = $data['storeId'];
+  $userId = ss()->idx;
+  if(db::fetch("select * from wish where book_idx = '$bookId' and store_idx = '$storeId' and user_idx = '$userId'")) {
+    echo json_encode([
+      "success" => false,
+      "msg" => "이미 관심한 도서입니다",
+    ]);
+  } else {
+    db::exec("insert into wish(book_idx, store_idx, user_idx) values('$bookId', '$storeId', '$userId')");
+    echo json_encode([
+      "success" => true,
+      "msg" => "관심 도서 추가",
+    ]);
   }
 });

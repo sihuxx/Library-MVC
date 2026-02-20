@@ -19,6 +19,9 @@ function views($page, $data=[])
 function alert($msg) {
   echo "<script>alert('$msg')</script>";
 }
+function ss() {
+  return $_SESSION["ss"] ?? false;
+}
 
 function back($msg = false)
 {
